@@ -1,20 +1,27 @@
 package github.tidenjohan.putiojava.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ErrorDto extends BaseDto {
-    public final String error_type;
-    public final String error_message;
+    public final String errorType;
+    public final String errorMessage;
 
-    public ErrorDto(String status, String error_type, String error_message) {
+    @JsonCreator
+    public ErrorDto(
+            @JsonProperty("status") String status,
+            @JsonProperty("error_type") String errorType,
+            @JsonProperty("error_message") String errorMessage) {
         super(status);
-        this.error_type = error_type;
-        this.error_message = error_message;
+        this.errorType = errorType;
+        this.errorMessage = errorMessage;
     }
 
-    public String getError_type() {
-        return error_type;
+    public String getErrorType() {
+        return errorType;
     }
 
-    public String getError_message() {
-        return error_message;
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

@@ -75,7 +75,7 @@ public class PutIoHttpClient {
                     try {
                         ErrorDto dto = objectMapper.readValue(body, new TypeReference<ErrorDto>() {
                         });
-                        throw new RuntimeException("Failed to execute request\n" + dto.error_type + ":" + dto.error_message);
+                        throw new ApiException(dto.errorType + ":" + dto.errorMessage);
                     } catch (IOException e) {
                         throw new RuntimeException("Failed to parse errorDto.", e);
                     }

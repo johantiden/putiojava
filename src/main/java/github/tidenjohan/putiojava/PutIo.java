@@ -13,7 +13,7 @@ public class PutIo {
     private static final String SCHEME = "https";
     private static final String DOMAIN = "put.io";
 
-    public static final String API_BASE = SCHEME + "//:api." + DOMAIN + "/v2";
+    public static final String API_BASE = SCHEME + "://api." + DOMAIN + "/v2";
     public static final String UPLOAD_BASE = SCHEME + "://upload." + DOMAIN;
 
     public static final String LIST_FILES = API_BASE + "/files/list";
