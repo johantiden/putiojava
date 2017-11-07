@@ -5,8 +5,8 @@
 This java client is designed to be hosted in a headless environment, which means direct downloads and uploads will probably be omitted.
 
 TODO:
-  [ ] Define a nice way to get the user token.
-  [ ] Allow upload of magnet links.
+- [ ] Define a nice way to get the user token.
+- [ ] Allow upload of magnet links.
 
 
 ## Setup
