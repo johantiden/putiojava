@@ -13,16 +13,21 @@ CloseableHttpClient httpClient = HttpClientBuilder.create()
                .setRedirectStrategy(new DefaultRedirectStrategy())
                .build();
 
+
 // jackson-databind JSON parser
 ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
 
-PutIoHttpClient putIoHttpClient = new PutIoHttpClient(httpClient, objectMapper);
 
 PutIoToken userToken = new PutIoToken("XXXXX"); // Insert user token here.
-PutIo putIo = new PutIo(putIoHttpClient, userToken);
+
+
+PutIo putIo = new PutIo(new PutIoHttpClient(httpClient, objectMapper), userToken);
 
 
 ListFilesDto listFilesDto = putIio.getFiles();
 
+FileDto file = putIo.getFile(1234);
+
+putIo.deleteFile(1234);
 
