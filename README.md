@@ -1,5 +1,14 @@
 # putiojava
 
+<aside class="warning">
+This is a work in progress! Please contact me if you need anything or just make a pull request with changes.
+  
+  TODO: Define a nice way to get the user token.
+  TODO: Allow upload of magnet links.
+</aside>
+
+This java client is designed to be hosted in a headless environment, which means direct downloads and uploads will probably be omitted.
+
 ## Setup
 
 1. Clone the repository.
