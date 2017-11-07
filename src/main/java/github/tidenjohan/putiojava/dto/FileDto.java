@@ -1,51 +1,69 @@
 package github.tidenjohan.putiojava.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FileDto extends BaseDto {
-    private final String content_type;
+    private final String contentType;
     private final String crc32;
-    private final String created_at;
-    private final String first_accessed_at;
+    private final String createdAt;
+    private final String firstAccessedAt;
     private final String icon;
     private final long id;
-    private final boolean is_mp4_available;
-    private final boolean is_shared;
+    private final boolean isMp4Available;
+    private final boolean isShared;
     private final String name;
-    private final String opensubtitles_hash;
-    private final long parent_id;
+    private final String opensubtitlesHash;
+    private final long parentId;
     private final String screenshot;
     private final long size;
 
-    public FileDto(String status, String content_type, String crc32, String created_at, String first_accessed_at, String icon, long id, boolean is_mp4_available, boolean is_shared, String name, String opensubtitles_hash, long parent_id, String screenshot, long size) {
+    @JsonCreator
+    public FileDto(
+            @JsonProperty("status") String status,
+            @JsonProperty("content_type") String contentType,
+            @JsonProperty("crc32") String crc32,
+            @JsonProperty("created_at") String createdAt,
+            @JsonProperty("first_accessed_at") String firstAccessedAt,
+            @JsonProperty("icon") String icon,
+            @JsonProperty("id") long id,
+            @JsonProperty("is_mp4_available") boolean isMp4Available,
+            @JsonProperty("is_shared") boolean isShared,
+            @JsonProperty("name") String name,
+            @JsonProperty("opensubtitles_hash") String opensubtitlesHash,
+            @JsonProperty("parent_id") long parentId,
+            @JsonProperty("screenshot") String screenshot,
+            @JsonProperty("size") long size) {
         super(status);
-        this.content_type = content_type;
+        this.contentType = contentType;
         this.crc32 = crc32;
-        this.created_at = created_at;
-        this.first_accessed_at = first_accessed_at;
+        this.createdAt = createdAt;
+        this.firstAccessedAt = firstAccessedAt;
         this.icon = icon;
         this.id = id;
-        this.is_mp4_available = is_mp4_available;
-        this.is_shared = is_shared;
+        this.isMp4Available = isMp4Available;
+        this.isShared = isShared;
         this.name = name;
-        this.opensubtitles_hash = opensubtitles_hash;
-        this.parent_id = parent_id;
+        this.opensubtitlesHash = opensubtitlesHash;
+        this.parentId = parentId;
         this.screenshot = screenshot;
         this.size = size;
     }
 
-    public String getContent_type() {
-        return content_type;
+    public String getContentType() {
+        return contentType;
     }
 
     public String getCrc32() {
         return crc32;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public String getFirst_accessed_at() {
-        return first_accessed_at;
+    public String getFirstAccessedAt() {
+        return firstAccessedAt;
     }
 
     public String getIcon() {
@@ -57,23 +75,23 @@ public class FileDto extends BaseDto {
     }
 
     public boolean is_mp4_available() {
-        return is_mp4_available;
+        return isMp4Available;
     }
 
     public boolean is_shared() {
-        return is_shared;
+        return isShared;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getOpensubtitles_hash() {
-        return opensubtitles_hash;
+    public String getOpensubtitlesHash() {
+        return opensubtitlesHash;
     }
 
-    public long getParent_id() {
-        return parent_id;
+    public long getParentId() {
+        return parentId;
     }
 
     public String getScreenshot() {

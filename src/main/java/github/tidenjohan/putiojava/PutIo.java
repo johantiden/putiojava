@@ -1,13 +1,10 @@
 package github.tidenjohan.putiojava;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import github.tidenjohan.putiojava.dto.FileDto;
-import github.tidenjohan.putiojava.entity.File;
+import github.tidenjohan.putiojava.dto.ListFilesDto;
 import github.tidenjohan.putiojava.internals.PutIoHttpClient;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class PutIo {
     private static final String SCHEME = "https";
@@ -31,23 +28,12 @@ public class PutIo {
      * Gets all files in the user's root folder.
      * @throws ApiException
      */
-    public List<File> getFiles() throws ApiException {
+    public ListFilesDto getFiles() throws ApiException {
         return getFiles(0);
     }
 
-    public List<File> getFiles(long parentId) throws ApiException {
-        List<FileDto> fileDtos = putIoHttpClient.get(LIST_FILES, token, new TypeReference<List<FileDto>>() {});
-        return toFileEntities(fileDtos);
+    public ListFilesDto getFiles(long parentId) throws ApiException {
+        ListFilesDto listFilesDto = putIoHttpClient.get(LIST_FILES, token, new TypeReference<ListFilesDto>() {});
+        return listFilesDto;
     }
-
-    private static List<File> toFileEntities(List<FileDto> fileDtos) {
-        return fileDtos.stream()
-                .map(PutIo::toFileEntity)
-                .collect(Collectors.toList());
-    }
-
-    private static File toFileEntity(FileDto fileDto) {
-        return new File(fileDto.getId());
-    }
-
 }

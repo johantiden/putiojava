@@ -32,7 +32,7 @@ public class PutIoHttpClient {
 
     public static HttpUriRequest buildGet(String url, PutIoToken token) {
         return RequestBuilder.get(url)
-                .addParameter("oauth_token", token.getToken())
+                .addHeader("Authorization", "token " + token.getToken())
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
@@ -40,7 +40,7 @@ public class PutIoHttpClient {
 
     public static HttpUriRequest buildPost(String url, PutIoToken token, String body) {
         return RequestBuilder.post(url)
-                .addParameter("oauth_token", token.getToken())
+                .addHeader("Authorization", "token " + token.getToken())
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .setEntity(new StringEntity(body, "UTF-8"))
