@@ -16,6 +16,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -71,6 +72,12 @@ public class PutIo {
     }
 
     public boolean deleteFiles(long... fileIds) throws ApiException {
+        ResponseDto responseDto = putIoHttpClient.post(URL_FILES_DELETE, token, new TypeReference<ResponseDto>() {},
+                p("file_ids", toCommaSeparatedString(fileIds)));
+        return responseDto.getStatus().equals("OK");
+    }
+    
+    public boolean deleteFiles(List<Long> fileIds) throws ApiException {
         ResponseDto responseDto = putIoHttpClient.post(URL_FILES_DELETE, token, new TypeReference<ResponseDto>() {},
                 p("file_ids", toCommaSeparatedString(fileIds)));
         return responseDto.getStatus().equals("OK");
@@ -137,6 +144,11 @@ public class PutIo {
 
     private static String toCommaSeparatedString(long... ids) {
         List<String> collect = Arrays.stream(ids).mapToObj(Long::toString).collect(Collectors.toList());
+        return String.join(",", collect);
+    }
+
+    private static String toCommaSeparatedString(Collection<Long> ids) {
+        List<String> collect = ids.stream().map(Object::toString).collect(Collectors.toList());
         return String.join(",", collect);
     }
 
