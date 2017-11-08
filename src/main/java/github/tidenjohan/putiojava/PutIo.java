@@ -1,6 +1,7 @@
 package github.tidenjohan.putiojava;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import github.tidenjohan.putiojava.dto.ListTransfersDto;
 import github.tidenjohan.putiojava.dto.TransferResponseDto;
 import github.tidenjohan.putiojava.dto.FileDto;
 import github.tidenjohan.putiojava.dto.FileResponseDto;
@@ -39,6 +40,8 @@ public class PutIo {
 
     private static final String URL_TRANSFERS_ADD = API_BASE + "/transfers/add";
     private static final String URL_TRANSFERS_GET = API_BASE + "/transfers/%d";
+    private static final String URL_TRANSFERS_LIST = API_BASE + "/transfers/list";
+    private static final String URL_TRANSFERS_CLEAN = API_BASE + "/transfers/clean";
 
 
     private final PutIoToken token;
@@ -113,9 +116,19 @@ public class PutIo {
                 .getTransfer();
     }
 
+
+    public TransferDto addTransfer(String url, long parentId) throws ApiException {
+        return addTransfer(url, parentId, null);
+    }
+
     public TransferDto getTransfer(long transferId) throws ApiException {
         return putIoHttpClient.get(String.format(URL_TRANSFERS_GET, transferId), token, new TypeReference<TransferResponseDto>() {})
                 .getTransfer();
+    }
+
+
+    public ListTransfersDto listTransfers() throws ApiException {
+        return putIoHttpClient.get(URL_TRANSFERS_LIST, token, new TypeReference<ListTransfersDto>() {});
     }
 
     public ListSubtitlesDto listSubtitles(long fileId) throws ApiException {
@@ -133,5 +146,9 @@ public class PutIo {
 
     private static NameValuePair p(String name, String value) {
         return new BasicNameValuePair(name, value);
+    }
+
+    public void cleanTransfers() throws ApiException {
+        putIoHttpClient.post(URL_TRANSFERS_CLEAN, token, null);
     }
 }
