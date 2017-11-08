@@ -3,27 +3,24 @@ package github.tidenjohan.putiojava.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UploadFileDto {
-    private final String file;
+public class TransferResponseDto {
+
+    private final String status;
     private final TransferDto transfer;
 
     @JsonCreator
-    public UploadFileDto(
-            @JsonProperty("file") String file,
+    public TransferResponseDto(
+            @JsonProperty("status") String status,
             @JsonProperty("transfer") TransferDto transfer) {
-        this.file = file;
+        this.status = status;
         this.transfer = transfer;
     }
 
-    public String getFile() {
-        return file;
+    public String getStatus() {
+        return status;
     }
 
     public TransferDto getTransfer() {
         return transfer;
-    }
-
-    public static class TransferDto {
-
     }
 }

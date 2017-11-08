@@ -1,6 +1,7 @@
 package github.tidenjohan.putiojava;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import github.tidenjohan.putiojava.dto.TransferResponseDto;
 import github.tidenjohan.putiojava.dto.FileDto;
 import github.tidenjohan.putiojava.dto.FileResponseDto;
 import github.tidenjohan.putiojava.dto.ListFilesDto;
@@ -8,6 +9,7 @@ import github.tidenjohan.putiojava.dto.ListSubtitlesDto;
 import github.tidenjohan.putiojava.dto.Mp4ConversionStatusDto;
 import github.tidenjohan.putiojava.dto.Mp4ConversionStatusResponseDto;
 import github.tidenjohan.putiojava.dto.ResponseDto;
+import github.tidenjohan.putiojava.dto.TransferDto;
 import github.tidenjohan.putiojava.internals.PutIoHttpClient;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -34,6 +36,10 @@ public class PutIo {
 
     public static final String UPLOAD_BASE = SCHEME + "://upload." + DOMAIN;
     public static final String URL_FILES_UPLOAD = UPLOAD_BASE + "/files/upload";
+
+    private static final String URL_TRANSFERS_ADD = API_BASE + "/transfers/add";
+    private static final String URL_TRANSFERS_GET = API_BASE + "/transfers/%d";
+
 
     private final PutIoToken token;
     private final PutIoHttpClient putIoHttpClient;
@@ -99,6 +105,18 @@ public class PutIo {
                 .getFile();
     }
 
+    public TransferDto addTransfer(String url, long destinationParentId, String callbackUrl) throws ApiException {
+        return putIoHttpClient.post(URL_TRANSFERS_ADD, token, new TypeReference<TransferResponseDto>() {},
+                p("url", url),
+                p("save_parent_id", destinationParentId),
+                p("callback_url", callbackUrl))
+                .getTransfer();
+    }
+
+    public TransferDto getTransfer(long transferId) throws ApiException {
+        return putIoHttpClient.get(String.format(URL_TRANSFERS_GET, transferId), token, new TypeReference<TransferResponseDto>() {})
+                .getTransfer();
+    }
 
     public ListSubtitlesDto listSubtitles(long fileId) throws ApiException {
         return putIoHttpClient.get(String.format(URL_FILES_LIST_SUBTITLES, fileId), token, new TypeReference<ListSubtitlesDto>() {});
