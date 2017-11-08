@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class ListFilesDto extends BaseDto {
+public class ListFilesDto {
     private final String cursor;
     private final List<FileDto> files;
     private final FileDto parent;
@@ -13,12 +13,10 @@ public class ListFilesDto extends BaseDto {
 
     @JsonCreator
     public ListFilesDto(
-            @JsonProperty("status") String status,
             @JsonProperty("cursor") String cursor,
             @JsonProperty("files") List<FileDto> files,
             @JsonProperty("parent") FileDto parent,
             @JsonProperty("total") long total) {
-        super(status);
         this.cursor = cursor;
         this.files = files;
         this.parent = parent;

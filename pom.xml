@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>github.tidenjohan.putiojava</groupId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <artifactId>putiojava</artifactId>
   
     <dependencies>
@@ -37,6 +37,11 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
+            <version>4.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
             <version>4.5.2</version>
         </dependency>
 

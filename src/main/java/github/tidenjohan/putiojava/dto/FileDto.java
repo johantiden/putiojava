@@ -3,7 +3,7 @@ package github.tidenjohan.putiojava.dto;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class FileDto extends BaseDto {
+public class FileDto {
     private final String contentType;
     private final String crc32;
     private final String createdAt;
@@ -20,7 +20,6 @@ public class FileDto extends BaseDto {
 
     @JsonCreator
     public FileDto(
-            @JsonProperty("status") String status,
             @JsonProperty("content_type") String contentType,
             @JsonProperty("crc32") String crc32,
             @JsonProperty("created_at") String createdAt,
@@ -34,7 +33,6 @@ public class FileDto extends BaseDto {
             @JsonProperty("parent_id") long parentId,
             @JsonProperty("screenshot") String screenshot,
             @JsonProperty("size") long size) {
-        super(status);
         this.contentType = contentType;
         this.crc32 = crc32;
         this.createdAt = createdAt;

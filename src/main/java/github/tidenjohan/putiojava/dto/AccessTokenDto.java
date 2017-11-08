@@ -2,11 +2,10 @@ package github.tidenjohan.putiojava.dto;
 
 import java.util.Objects;
 
-public class AccessTokenDto extends BaseDto {
+public class AccessTokenDto {
     public final String access_token;
 
-    private AccessTokenDto(String status, String access_token) {
-        super(status);
+    private AccessTokenDto(String access_token) {
         this.access_token = Objects.requireNonNull(access_token);
     }
 

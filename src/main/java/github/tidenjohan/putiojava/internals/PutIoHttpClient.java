@@ -1,19 +1,20 @@
 package github.tidenjohan.putiojava.internals;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import github.tidenjohan.putiojava.ApiException;
-import github.tidenjohan.putiojava.dto.ErrorDto;
 import github.tidenjohan.putiojava.PutIoToken;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class PutIoHttpClient {
@@ -30,36 +31,47 @@ public class PutIoHttpClient {
         return executeTo(buildGet(url, token), typeLiteral);
     }
 
-    public static HttpUriRequest buildGet(String url, PutIoToken token) {
+    public <T> T get(String url, PutIoToken token, TypeReference<T> typeLiteral, NameValuePair... parameters) throws ApiException {
+        return executeTo(buildGet(url, token, parameters), typeLiteral);
+    }
+
+    public static HttpUriRequest buildGet(String url, PutIoToken token, NameValuePair... parameters) {
         return RequestBuilder.get(url)
+                .addParameters(parameters)
                 .addHeader("Authorization", "token " + token.getToken())
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
                 .build();
     }
-
-    public static HttpUriRequest buildPost(String url, PutIoToken token, String body) {
+//
+//    public static HttpUriRequest buildPost(String url, PutIoToken token, HttpEntity entity) {
+//        return RequestBuilder.post(url)
+//                .addHeader("Authorization", "token " + token.getToken())
+//                .addHeader("Content-Type", "application/json")
+//                .addHeader("Accept", "application/json")
+//                .setEntity(entity)
+//                .build();
+//    }
+    public static HttpUriRequest buildPost(String url, PutIoToken token, NameValuePair... parameters) throws UnsupportedEncodingException {
         return RequestBuilder.post(url)
                 .addHeader("Authorization", "token " + token.getToken())
-                .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json")
-                .setEntity(new StringEntity(body, "UTF-8"))
+                .setEntity(new UrlEncodedFormEntity(Arrays.asList(parameters)))
                 .build();
     }
 
-    public <T> T post(String url, PutIoToken token, Object body, TypeReference<T> typeLiteral) throws ApiException {
-        String bodyString = null;
+//    public <T> T post(String url, PutIoToken token, TypeReference<T> typeLiteral, HttpEntity entity) throws ApiException {
+//        HttpUriRequest httpUriRequest = buildPost(url, token, entity);
+//        return executeTo(httpUriRequest, typeLiteral);
+//    }
+    public <T> T post(String url, PutIoToken token, TypeReference<T> typeLiteral, NameValuePair... parameters) throws ApiException {
+        HttpUriRequest httpUriRequest = null;
         try {
-            bodyString = objectMapper.writeValueAsString(body);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to write object to JSON");
+            httpUriRequest = buildPost(url, token, parameters);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("Failed to post " + url, e);
         }
-        HttpUriRequest httpUriRequest = buildPost(url, token, bodyString);
         return executeTo(httpUriRequest, typeLiteral);
-    }
-
-    public void post(String url, PutIoToken traktToken, Object body) throws ApiException {
-        post(url, traktToken, body, new TypeReference<Object>() {});
     }
 
     public String executeToString(HttpUriRequest request) throws ApiException {
@@ -71,14 +83,9 @@ public class PutIoHttpClient {
             if (execute.getStatusLine().getStatusCode() <= 299) {
                 return body;
             } else {
+                System.out.println("statuscode: " + execute.getStatusLine().getStatusCode());
                 if (!body.isEmpty()) {
-                    try {
-                        ErrorDto dto = objectMapper.readValue(body, new TypeReference<ErrorDto>() {
-                        });
-                        throw new ApiException(dto.errorType + ":" + dto.errorMessage);
-                    } catch (IOException e) {
-                        throw new RuntimeException("Failed to parse errorDto.", e);
-                    }
+                    throw new ApiException(body);
                 } else {
                     throw new RuntimeException("Failed to execute request. Body was empty");
                 }
@@ -91,6 +98,9 @@ public class PutIoHttpClient {
 
     public <T> T executeTo(HttpUriRequest request, TypeReference<T> typeReference) throws ApiException {
         String body = executeToString(request);
+        if (typeReference == null) {
+            return null;
+        }
         try {
             return objectMapper.readValue(body, typeReference);
         } catch (IOException e) {
