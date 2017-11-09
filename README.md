@@ -40,6 +40,5 @@ FileDto file = putIo.getFile(1234);
 putIo.deleteFile(1234);
 ```
 
-[![Release](https://jitpack.io/v/johantiden/putiojava.svg?style=flat-square)]
-(https://jitpack.io/#johantiden/putiojava)
+[![Release](https://jitpack.io/v/johantiden/putiojava.svg?style=flat-square)](https://jitpack.io/#johantiden/putiojava)
 
