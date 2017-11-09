@@ -16,8 +16,8 @@ TODO:
 3. Add a maven dependency on the version you just built.
 
 ### Jitpack
-Or if you trust jitpack.io, click here for instructions.
-[![Release](https://jitpack.io/v/johantiden/putiojava.svg?style=flat-square)](https://jitpack.io/#johantiden/putiojava)
+Or if you trust jitpack.io, click [![Release](https://jitpack.io/v/johantiden/putiojava.svg?style=flat-square)](https://jitpack.io/#johantiden/putiojava) for instructions.
+
 
 
 ## Usage
