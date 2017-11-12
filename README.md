@@ -15,6 +15,11 @@ TODO:
 2. Build with maven.
 3. Add a maven dependency on the version you just built.
 
+### Jitpack
+Or if you trust jitpack.io, click [![Release](https://jitpack.io/v/johantiden/putiojava.svg?style=flat-square)](https://jitpack.io/#johantiden/putiojava) and choose the latest release for instructions.
+
+
+
 ## Usage
 ```java
 // Apache httpClient
@@ -39,3 +44,5 @@ FileDto file = putIo.getFile(1234);
 
 putIo.deleteFile(1234);
 ```
+
+
