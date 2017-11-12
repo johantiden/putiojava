@@ -43,6 +43,7 @@ public class PutIo {
     private static final String URL_TRANSFERS_GET = API_BASE + "/transfers/%d";
     private static final String URL_TRANSFERS_LIST = API_BASE + "/transfers/list";
     private static final String URL_TRANSFERS_CLEAN = API_BASE + "/transfers/clean";
+    private static final String URL_TRANSFERS_CANCEL = API_BASE + "/transfers/cancel";
 
 
     private final PutIoToken token;
@@ -162,5 +163,11 @@ public class PutIo {
 
     public void cleanTransfers() throws ApiException {
         putIoHttpClient.post(URL_TRANSFERS_CLEAN, token, null);
+    }
+
+    public boolean cancelTransfer(long transferId) throws ApiException {
+        ResponseDto responseDto = putIoHttpClient.post(URL_TRANSFERS_CANCEL, token, new TypeReference<ResponseDto>() {},
+                p("transfer_ids", toCommaSeparatedString(transferId)));
+        return responseDto.getStatus().equals("OK");
     }
 }
